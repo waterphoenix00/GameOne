@@ -1,6 +1,8 @@
-package src;
+package engine;
+
 
 import java.io.*;
+
 public class GridTester
 {
     public static void main(String[] args) throws IOException

@@ -1,4 +1,4 @@
-package src;
+package engine;
 
 
 public interface GameObject {

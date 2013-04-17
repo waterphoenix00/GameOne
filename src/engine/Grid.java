@@ -1,7 +1,8 @@
-package src;
+package engine;
 
 import java.io.*;
 import java.util.Scanner;
+
 public class Grid
 {
     int xTileDim;
