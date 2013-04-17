@@ -24,6 +24,7 @@ public class Grid
                 intGrid[i][j]= Integer.parseInt(sa[j]);
             }
         }
+        sc.close();
     }
 
     public Tile[][] getTileGrid()
