@@ -24,11 +24,7 @@ public class Grid
                 intGrid[i][j]= Integer.parseInt(sa[j]);
             }
         }
-        sc.close();
-    }
-
-    public Tile[][] getTileGrid()
-    {
+        
         tileGrid = new Tile[yTileDim][xTileDim];
         for(int i=0; i <yTileDim; i++)
         {
@@ -37,6 +33,12 @@ public class Grid
                 tileGrid[i][j]=  new Tile(intGrid[i][j],i,j);
             }
         }
+        
+        sc.close();
+    }
+
+    public Tile[][] getTileGrid()
+    {
         return tileGrid;
     }
 
