@@ -28,8 +28,8 @@ public class GamePanel extends JPanel implements Runnable {
 	private Graphics dbg;
 	private Image dbImage;
 	
-	private ArrayList<GameObject> gameObjects;
-	private GameObject player;
+	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
+	private PlayerObject player;
 	private Grid foreground;
 	private Camera playerCamera;
 	
@@ -39,8 +39,11 @@ public class GamePanel extends JPanel implements Runnable {
 		setFocusable(true);
 		requestFocus();
 		
+		addKeyListener(new PlayerListener());
+		
 		foreground = new Grid(18, 10, 1);
 		playerCamera = new Camera(this, 0, 0);
+		player = new PlayerObject(this, 200, 200, 60, 60);
 	}
 	
 	public void addNotify() {
@@ -100,7 +103,10 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	private void update() {
-		
+		for (GameObject obj: gameObjects) {
+			obj.update();
+		}
+		player.update();
 	}
 	
 	private void render() {
@@ -141,14 +147,22 @@ public class GamePanel extends JPanel implements Runnable {
 		return foreground;
 	}
 	
+	public ArrayList<GameObject> getGameObjects() {
+		return gameObjects;
+	}
+	
+	public PlayerObject getPlayer() {
+		return player;
+	}
+	
 	public class PlayerListener extends KeyAdapter {
-		/*public void keyPressed(KeyEvent e) {
+		public void keyPressed(KeyEvent e) {
 			player.keyPressed(e);
 		}
 		
 		public void keyReleased(KeyEvent e) {
 			player.keyReleased(e);
-		}*/
+		}
 	}
 
 }

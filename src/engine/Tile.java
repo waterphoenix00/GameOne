@@ -21,7 +21,6 @@ public class Tile
         ypos = y;
         collidable = (imageInt>=COLLIDABLE_MIN && imageInt<=COLLIDABLE_MAX);
         if (imageInt > 0) {
-        	System.out.println(imageInt+".png");
         	tileIcon = new ImageIcon(this.getClass().getResource(imageInt+".png"));
         	tileImage = tileIcon.getImage();
         } else {

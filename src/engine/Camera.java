@@ -32,15 +32,19 @@ public class Camera
         {
             for(int j=column; j < column+18; j++)
             {
-            	//System.out.println(i + " " + j + " " + tileGrid[i][j].getImage());
-            	if(tileGrid[i][j].getImage() != null) {
-            		System.out.println(i + " " + j);
-            		g.drawImage(tileGrid[i][j].getImage(), (j*64)-x, (i*64)-y, null);
-            		//g.drawImage(new ImageIcon(this.getClass().getResource("1.png")).getImage(), 0, 0, null);
+            	if(i < tileGrid.length && j < tileGrid[0].length) {
+            		if(tileGrid[i][j].getImage() != null) {
+            			g.drawImage(tileGrid[i][j].getImage(), (j*64)-x, (i*64)-y, null);
+            			//g.drawImage(new ImageIcon(this.getClass().getResource("1.png")).getImage(), 0, 0, null);
+            		}
             	}
+            	
             }
         }
-        
+        for (GameObject obj: gp.getGameObjects()) {
+        	obj.draw(g, x, y);
+        }
+        gp.getPlayer().draw(g, x, y);
     }
     
     public void getObjects()
