@@ -1,5 +1,7 @@
 package engine;
 
+import java.awt.Image;
+
 import javax.swing.ImageIcon;
 public class Tile
 {
@@ -9,6 +11,8 @@ public class Tile
     private int imageInt;
     private static final int COLLIDABLE_MIN = 1;
     private static final int COLLIDABLE_MAX = 50;
+    private ImageIcon tileIcon;
+    private Image tileImage;
     
     public Tile(int i, int y, int x)
     {
@@ -16,6 +20,14 @@ public class Tile
         xpos = x;
         ypos = y;
         collidable = (imageInt>=COLLIDABLE_MIN && imageInt<=COLLIDABLE_MAX);
+        if (imageInt > 0) {
+        	System.out.println(imageInt+".png");
+        	tileIcon = new ImageIcon(this.getClass().getResource(imageInt+".png"));
+        	tileImage = tileIcon.getImage();
+        } else {
+        	tileIcon = null;
+        	tileImage = null;
+        }
     }
 
     public void setXPos(int x)
@@ -43,9 +55,9 @@ public class Tile
         return collidable; 
     }
 
-    public ImageIcon getImage()
+    public Image getImage()
     {
-        return new ImageIcon("Images//"+imageInt+".PNG");
+        return tileImage;
     }
     
     public String toString()

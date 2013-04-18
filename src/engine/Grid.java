@@ -8,16 +8,31 @@ public class Grid
     int xTileDim;
     int yTileDim;
     int level;
-    int[][] intGrid;
+    int[][] intGrid = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
     Tile[][] tileGrid;
        
-    public Grid(int x, int y, int l)throws FileNotFoundException
+    public Grid(int x, int y, int l)
     {
         xTileDim = x;
         yTileDim = y;
         level = l;
-        intGrid = new int [y][x];
-        Scanner sc = new Scanner(new File("GA"+level+".txt"));
+        /*Scanner sc = new Scanner("Dang");
+		try {
+			sc = new Scanner(new File("GA"+level+".txt"));
+		} catch (FileNotFoundException e) {
+			System.out.println(e);
+		}
         for(int i=0; i <yTileDim; i++)
         {
             String s = sc.nextLine();
@@ -26,7 +41,9 @@ public class Grid
             {
                 intGrid[i][j]= Integer.parseInt(sa[j]);
             }
-        }
+        }*/
+        xTileDim = intGrid[0].length;
+        yTileDim = intGrid.length;
         
         tileGrid = new Tile[yTileDim][xTileDim];
         for(int i=0; i <yTileDim; i++)
@@ -37,7 +54,7 @@ public class Grid
             }
         }
         
-        sc.close();
+        //sc.close();
     }
 
     public Tile[][] getTileGrid()

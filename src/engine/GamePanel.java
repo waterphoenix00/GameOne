@@ -2,6 +2,7 @@ package engine;
 
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
@@ -24,18 +25,22 @@ public class GamePanel extends JPanel implements Runnable {
 	private boolean running = false;
 	private Thread animator;
 	
-	//private Graphics dbg;
+	private Graphics dbg;
 	private Image dbImage;
 	
 	private ArrayList<GameObject> gameObjects;
 	private GameObject player;
 	private Grid foreground;
+	private Camera playerCamera;
 	
 	public GamePanel() {
 		setBackground(Color.BLACK);
-		setSize(PWIDTH, PHEIGHT);
+		setPreferredSize(new Dimension(PWIDTH, PHEIGHT));
 		setFocusable(true);
 		requestFocus();
+		
+		foreground = new Grid(18, 10, 1);
+		playerCamera = new Camera(this, 0, 0);
 	}
 	
 	public void addNotify() {
@@ -99,7 +104,16 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	private void render() {
+		if (dbImage == null) {
+			dbImage = createImage(PWIDTH, PHEIGHT);
+			if (dbImage == null) {
+				System.out.println("DBIMAGE ERROR");
+				return;
+			}
+			dbg = dbImage.getGraphics();
+		}
 		
+		playerCamera.draw(dbg);
 	}
 	
 	private void paint() {
@@ -113,6 +127,18 @@ public class GamePanel extends JPanel implements Runnable {
 		} catch (Exception e) {
 			System.out.println("Graphics context error: " + e);
 		}
+	}
+	
+	public int getWidth() {
+		return PWIDTH;
+	}
+	
+	public int getHeight() {
+		return PHEIGHT;
+	}
+	
+	public Grid getGrid() {
+		return foreground;
 	}
 	
 	public class PlayerListener extends KeyAdapter {
