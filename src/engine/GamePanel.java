@@ -43,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		foreground = new Grid(18, 10, 1);
 		playerCamera = new Camera(this, 0, 0);
-		player = new PlayerObject(this, 200, 200, 60, 60);
+		player = new PlayerObject(this, 200, 200, 60, 128);
 	}
 	
 	public void addNotify() {
@@ -107,6 +107,7 @@ public class GamePanel extends JPanel implements Runnable {
 			obj.update();
 		}
 		player.update();
+		playerCamera.update();
 	}
 	
 	private void render() {

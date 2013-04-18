@@ -39,7 +39,7 @@ public class PlayerObject implements GameObject {
 	public PlayerObject(GamePanel gp, int x, int y, int w, int h) {
 		this.x = x;
 		this.y = y;
-		width = h;
+		width = w;
 		height = h;
 		this.gp = gp;
 		tiles = gp.getGrid().getTileGrid();
