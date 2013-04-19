@@ -2,6 +2,9 @@ package engine;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
 
 public class Camera
 {
@@ -23,6 +26,9 @@ public class Camera
     
     private Tile[][] tileGrid;
     
+    private static final String bg = "Background.jpg";
+    private Image background;
+    
     public Camera(GamePanel gamePanel, int x, int y)
     {
         gp = gamePanel;
@@ -32,14 +38,13 @@ public class Camera
         column = x/TILE_SIZE;
         row = y/TILE_SIZE;
         
-
+        background = new ImageIcon(this.getClass().getResource(bg)).getImage();
         tileGrid = gp.getGrid().getTileGrid();
     }
 
     public void draw(Graphics g)
     {
-        g.setColor(Color.WHITE);
-        g.fillRect(0, 0, gp.getWidth(), gp.getHeight());
+        g.drawImage(background, 0, 0, null);
         for(int i=row; i <= row + SCREEN_ROW_NUM + 1; i++)
         {
             for(int j=column; j <= column + SCREEN_COLUMN_NUM + 1; j++)

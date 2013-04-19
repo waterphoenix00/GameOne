@@ -19,7 +19,7 @@ public class PlayerObject implements GameObject {
 	private int[] vel = {0,0};
 	private int[] acc = {0,1};
 	
-	private static final String player= "player.png";
+	private static final String player= "charizard.png";
 	private Image playerImg;
 	
 	private GamePanel gp;
