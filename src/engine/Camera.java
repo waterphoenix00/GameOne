@@ -1,6 +1,5 @@
 package engine;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -8,8 +7,8 @@ import javax.swing.ImageIcon;
 
 public class Camera
 {
-    private int x;
-    private int y;
+    private double x;
+    private double y;
     
     private int column;
     private int row;
@@ -26,7 +25,7 @@ public class Camera
     
     private Tile[][] tileGrid;
     
-    private static final String bg = "Background.jpg";
+    private static final String bg = "imgs/Background.jpg";
     private Image background;
     
     public Camera(GamePanel gamePanel, int x, int y)
@@ -44,6 +43,7 @@ public class Camera
 
     public void draw(Graphics g)
     {
+    	PlayerObject p = gp.getPlayer();
         g.drawImage(background, 0, 0, null);
         for(int i=row; i <= row + SCREEN_ROW_NUM + 1; i++)
         {
@@ -51,8 +51,8 @@ public class Camera
             {
             	if(i < tileGrid.length && j < tileGrid[0].length) {
             		if(tileGrid[i][j].getImage() != null) {
-            			g.drawImage(tileGrid[i][j].getImage(), (j*TILE_SIZE)-x, (i*TILE_SIZE)-y, null);
-            			//g.drawImage(new ImageIcon(this.getClass().getResource("1.png")).getImage(), 0, 0, null);
+            			g.drawImage(tileGrid[i][j].getImage(p.getPhased()), 
+            					(int)((j*TILE_SIZE)-x), (int)((i*TILE_SIZE)-y), null);
             		}
             	}
             	
@@ -84,5 +84,7 @@ public class Camera
     		y = Math.min(tileGrid.length * TILE_SIZE - (SCREEN_ROW_NUM * TILE_SIZE),
     				(player.getY() + player.getHeight() + YBORDER) - (SCREEN_ROW_NUM * TILE_SIZE));
     	}
+    	row = (int)(y/TILE_SIZE);
+    	column = (int)(x/TILE_SIZE);
     }
 }

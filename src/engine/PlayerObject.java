@@ -10,21 +10,23 @@ import javax.swing.ImageIcon;
 
 public class PlayerObject implements GameObject {
 	
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	
-	private int width;
-	private int height;
+	private double width;
+	private double height;
 	
-	private int[] vel = {0,0};
-	private int[] acc = {0,1};
+	private double[] vel = {0,0};
+	private double[] acc = {0,.5};
 	
-	private static final String player= "charizard.png";
+	private static final String player= "imgs/player.png";
 	private Image playerImg;
 	
 	private GamePanel gp;
 	private Tile[][] tiles;
 	private static final int TILE_SIZE = 64;
+	
+	private boolean phased;
 	
 	/**
 	 * This constructs a player object.
@@ -78,9 +80,9 @@ public class PlayerObject implements GameObject {
 	}
 
 	@Override
-	public void draw(Graphics g, int cameraX, int cameraY) {
-		g.drawImage(playerImg, x -cameraX - (playerImg.getWidth(null)-width)/2
-				, y-cameraY - (playerImg.getHeight(null)-height)/2, null);
+	public void draw(Graphics g, double cameraX, double cameraY) {
+		g.drawImage(playerImg, (int)(x -cameraX - (playerImg.getWidth(null)-width)/2)
+				, (int)(y-cameraY - (playerImg.getHeight(null)-height)/2), null);
 	}
 	
 	private void accelerate() {
@@ -91,8 +93,9 @@ public class PlayerObject implements GameObject {
 	private boolean collidingObjects() {
 		ArrayList<GameObject> objects = gp.getGameObjects();
 		for (GameObject obj: objects) {
-			if (new Rectangle(x, y, width, height).intersects(
-					new Rectangle(obj.getX(), obj.getY(), obj.getWidth(), obj.getHeight()))) {
+			if (new Rectangle((int)x, (int)y, (int)width, (int)height).intersects(
+					new Rectangle((int)obj.getX(), (int)obj.getY(), 
+							(int)obj.getWidth(), (int)obj.getHeight()))) {
 				return true;
 			}
 		}
@@ -100,8 +103,8 @@ public class PlayerObject implements GameObject {
 	}
 	
 	private boolean collidingTiles() {
-		for (int i = (x+1)/TILE_SIZE; i <= (x+width-1)/TILE_SIZE; i++) {
-			for (int j = (y+1)/TILE_SIZE; j <= (y+height-1)/TILE_SIZE; j++) {
+		for (int i = (int)((x+1)/TILE_SIZE); i <= (x+width-1)/TILE_SIZE; i++) {
+			for (int j = (int)((y+1)/TILE_SIZE); j <= (y+height-1)/TILE_SIZE; j++) {
 				if (tiles[j][i].getCollidable())
 					return true;
 			}
@@ -168,7 +171,9 @@ public class PlayerObject implements GameObject {
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			vel[0] = -5;
 		} else if (e.getKeyCode() == KeyEvent.VK_UP) {
-			vel[1] = -20;
+			vel[1] = -10;
+		} else if (e.getKeyCode() == KeyEvent.VK_E) {
+			phased = !phased;
 		}
 	}
 	
@@ -181,23 +186,27 @@ public class PlayerObject implements GameObject {
 	}
 
 	@Override
-	public int getX() {
+	public double getX() {
 		return x;
 	}
 
 	@Override
-	public int getY() {
+	public double getY() {
 		return y;
 	}
 
 	@Override
-	public int getHeight() {
+	public double getHeight() {
 		return height;
 	}
 
 	@Override
-	public int getWidth() {
+	public double getWidth() {
 		return width;
+	}
+	
+	public boolean getPhased() {
+		return phased;
 	}
 
 }
