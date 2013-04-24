@@ -1,4 +1,8 @@
+package engine;
+
+
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
@@ -21,18 +25,25 @@ public class GamePanel extends JPanel implements Runnable {
 	private boolean running = false;
 	private Thread animator;
 	
-	//private Graphics dbg;
+	private Graphics dbg;
 	private Image dbImage;
 	
-	private ArrayList<GameObject> gameObjects;
-	private GameObject player;
+	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
+	private PlayerObject player;
 	private Grid foreground;
+	private Camera playerCamera;
 	
 	public GamePanel() {
 		setBackground(Color.BLACK);
-		setSize(PWIDTH, PHEIGHT);
+		setPreferredSize(new Dimension(PWIDTH, PHEIGHT));
 		setFocusable(true);
 		requestFocus();
+		
+		addKeyListener(new PlayerListener());
+		
+		foreground = new Grid(18, 10, 1);
+		playerCamera = new Camera(this, 0, 0);
+		player = new PlayerObject(this, 200, 200, 60, 60);
 	}
 	
 	public void addNotify() {
@@ -92,11 +103,24 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	private void update() {
-		
+		for (GameObject obj: gameObjects) {
+			obj.update();
+		}
+		player.update();
+		playerCamera.update();
 	}
 	
 	private void render() {
+		if (dbImage == null) {
+			dbImage = createImage(PWIDTH, PHEIGHT);
+			if (dbImage == null) {
+				System.out.println("DBIMAGE ERROR");
+				return;
+			}
+			dbg = dbImage.getGraphics();
+		}
 		
+		playerCamera.draw(dbg);
 	}
 	
 	private void paint() {
@@ -112,14 +136,34 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	}
 	
+	public int getWidth() {
+		return PWIDTH;
+	}
+	
+	public int getHeight() {
+		return PHEIGHT;
+	}
+	
+	public Grid getGrid() {
+		return foreground;
+	}
+	
+	public ArrayList<GameObject> getGameObjects() {
+		return gameObjects;
+	}
+	
+	public PlayerObject getPlayer() {
+		return player;
+	}
+	
 	public class PlayerListener extends KeyAdapter {
-		/*public void keyPressed(KeyEvent e) {
+		public void keyPressed(KeyEvent e) {
 			player.keyPressed(e);
 		}
 		
 		public void keyReleased(KeyEvent e) {
 			player.keyReleased(e);
-		}*/
+		}
 	}
 
 }

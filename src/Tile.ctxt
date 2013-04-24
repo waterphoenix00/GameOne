@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.params=i\ y\ x
+comment0.target=Tile(int,\ int,\ int)
+comment1.params=x
+comment1.target=void\ setXPos(int)
+comment2.params=y
+comment2.target=void\ setYPos(int)
+comment3.params=
+comment3.target=int\ getXPos()
+comment4.params=
+comment4.target=int\ getYPos()
+comment5.params=
+comment5.target=boolean\ getCollidable()
+comment6.params=
+comment6.target=javax.swing.ImageIcon\ getImage()
+comment7.params=
+comment7.target=java.lang.String\ toString()
+numComments=8
