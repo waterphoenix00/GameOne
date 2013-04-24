@@ -9,4 +9,6 @@ public interface GameObject {
 	public double getY();
 	public double getHeight();
 	public double getWidth();
+	public void setX(double x);
+	public void setY(double y);
 }

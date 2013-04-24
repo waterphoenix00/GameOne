@@ -19,14 +19,16 @@ public class PlayerObject implements GameObject {
 	private double[] vel = {0,0};
 	private double[] acc = {0,.5};
 	
-	private static final String player= "imgs/player.png";
+	private static final String player= "imgs/charizard.png";
 	private Image playerImg;
 	
 	private GamePanel gp;
 	private Tile[][] tiles;
-	private static final int TILE_SIZE = 64;
+	private static final int TILE_SIZE = Tile.TILE_SIZE;
 	
 	private boolean phased;
+	
+	private boolean alive;
 	
 	/**
 	 * This constructs a player object.
@@ -46,18 +48,18 @@ public class PlayerObject implements GameObject {
 		this.gp = gp;
 		tiles = gp.getGrid().getTileGrid();
 		playerImg = new ImageIcon(this.getClass().getResource(player)).getImage();
+		phased = false;
+		setAlive(true);
 	}
 
 	@Override
 	public void update() {
-		System.out.println(vel[1]);
 		accelerate();
 		move(0, 1);
 		if(collidingObjects()) {
 			move(0, -1);
 		}
 		if (collidingTiles()) {
-			System.out.println("here");
 			moveBackTile(0);
 			vel[0] = 0;
 			while (collidingTiles()) {
@@ -70,13 +72,14 @@ public class PlayerObject implements GameObject {
 			move(1, -1);
 		}
 		if (collidingTiles()) {
-			System.out.println("here1");
 			moveBackTile(1);
 			vel[1] = 0;
 			while (collidingTiles()) {
 				moveBackTile(1);
 			}
 		}
+		System.out.println("player update");
+		tiles[(int)((y+height-1)/TILE_SIZE)][(int)((x+width/2)/TILE_SIZE)].objectUpdate(this);
 	}
 
 	@Override
@@ -105,8 +108,15 @@ public class PlayerObject implements GameObject {
 	private boolean collidingTiles() {
 		for (int i = (int)((x+1)/TILE_SIZE); i <= (x+width-1)/TILE_SIZE; i++) {
 			for (int j = (int)((y+1)/TILE_SIZE); j <= (y+height-1)/TILE_SIZE; j++) {
-				if (tiles[j][i].getCollidable())
-					return true;
+				if (phased) {
+					if (tiles[j][i].getPhaseable())
+						return true;
+					if (tiles[j][i].getCollidable())
+						return true;
+				} else {
+					if (tiles[j][i].getCollidable())
+						return true;
+				}
 			}
 		}
 		return false;
@@ -207,6 +217,24 @@ public class PlayerObject implements GameObject {
 	
 	public boolean getPhased() {
 		return phased;
+	}
+
+	@Override
+	public void setX(double x) {
+		this.x = x;
+	}
+
+	@Override
+	public void setY(double y) {
+		this.y = y;
+	}
+
+	public boolean isAlive() {
+		return alive;
+	}
+
+	public void setAlive(boolean alive) {
+		this.alive = alive;
 	}
 
 }

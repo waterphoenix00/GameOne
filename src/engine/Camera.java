@@ -21,7 +21,7 @@ public class Camera
     private static final int SCREEN_ROW_NUM = 9;
     private static final int SCREEN_COLUMN_NUM = 16;
     
-    private static final int TILE_SIZE = 64;
+    private static final int TILE_SIZE = Tile.TILE_SIZE;
     
     private Tile[][] tileGrid;
     
